@@ -1,0 +1,30 @@
+os:
+    - linux
+    - osx
+language: generic
+sudo: required
+dist: trusty
+env:
+    - BUILD_DIR=Centigrade/com.cntgrd.server
+osx_image: xcode9
+
+notifications:
+  slack:
+    secure: pGNVwy5DEWfeBIEdVWRTbv91ErVWPpYZO+PjcLKsaUP1v3lWuGVJdG3fQdAZHY6VKOApKLKgE3TPxYJlWg0kY1MaJeySZFgYaJw1e0tFYJCrEdQ0VKiei/mDBJNbd0Tmfsb9efzTJBtMCRndmlBorWE92UjXq7zNDAtw/kvI5hwcN6LP/B1L5jST15dxPNjsJgoQ69H7D8T1n7i/FFLbnNf/KPA/GAGj2VEQQeGmsaE6GgkKg8TVuX0T2XkhCakYkh6MjvZrQSGfEG9j8k8Rriq+8cVDpv8ZbMVw8snTRUnLfQ9LblbrqAs02OSV40sEDs6xA3qhxkMybp29SEuXcQSwpc5mX+tTwd8N7Qi0xpqjD5JdWNy3Io/7v5U1dgKdtgFzTxwTDaspetzpbHvIoAtUqEi0CthSieX7lCPLxePLEicaG/yXYU+8g4Re4SEs8cnKbPh7IBTI7EVFmcHIDle/gZnrp4nHgJZ7YUX8MpIwZPgDWg+Pdn3KQXL2OU/rNx30WRYwdouD4PgLIBPCpM5t/irQxbqPqIS7T02jIz0/sgTA1miu5+jK9RP0TLETKnT5ParZ7JE6btMMluswzR17iGwSQ7g3KO+YDrs6jT15GlMXA8CUWvco3+X/SWQYG7AjAp99wyD28pHW47FEclnY2xzjp+qqh2L7e5DF3Y4=
+
+before_install:
+    - if [ $TRAVIS_OS_NAME == "osx" ]; then
+          brew tap vapor/tap;
+          brew update;
+          brew install vapor;
+      else
+          eval "$(curl -sL https://apt.vapor.sh)";
+          sudo apt-get install vapor;
+          sudo chmod -R a+rx /usr/;
+      fi
+
+script:
+    - cd $BUILD_DIR
+    - swift build
+    - swift build -c release
+    - swift test
