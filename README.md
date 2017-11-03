@@ -8,9 +8,14 @@ Before the Centigrade backend can be deployed, the host system must be set up to
 
 Swift and Vapor are easy enough to install, just run the following commands:
 ```bash
+# install curl
 sudo apt update
 sudo apt install -y curl
+
+# add Vapor apt repository
 curl -sL https://apt.vapor.sh | bash
+
+# install Swift and Vapor
 sudo apt update
 sudo apt install -y swift vapor
 ```
