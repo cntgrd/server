@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
     api:
-        command: .build/debug/Run serve
+        command: make run_release
         depends_on:
             - database
         image: vapor/toolbox:latest

@@ -1,0 +1,19 @@
+localhost:80
+
+tls rrash@smu.edu 
+gzip
+
+root /var/www/cntgrd
+
+log /var/log/caddy/access.log {
+    rotate_keep 10
+}
+errors /var/log/caddy/error.log {
+    rotate_keep 10
+}
+
+proxy /api api:8080 {
+    fail_timeout 300s
+    without /api
+    transparent
+}
