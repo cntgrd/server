@@ -41,3 +41,4 @@ log/
 
 # temp files
 *.swp
+.DS_Store
