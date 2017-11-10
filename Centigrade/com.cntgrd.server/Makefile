@@ -12,10 +12,10 @@ SRC = ./
 # Targets                       #
 #################################
 
-debug: clean
+debug:
 	swift build --package-path $(SRC) --configuration debug
 
-release: clean
+release:
 	swift build --package-path $(SRC) --configuration release
 
 #################################
