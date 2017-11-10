@@ -14,10 +14,12 @@ SRC = Centigrade/com.cntgrd.server/
 
 deploy_clean:
 	docker stack rm centigrade
+	docker stack rm dev_centigrade
+	docker stack rm testing_centigrade
 
 deploy_dev:
 	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)dev/docker-compose.yml centigrade
+		./$(DOCKER_ROOT)dev/docker-compose.yml dev_centigrade
 
 deploy_production:
 	docker stack deploy --compose-file \
@@ -25,7 +27,7 @@ deploy_production:
 
 deploy_testing:
 	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)testing/docker-compose.yml centigrade
+		./$(DOCKER_ROOT)testing/docker-compose.yml testing_centigrade
 
 #################################
 # Targets                       #
