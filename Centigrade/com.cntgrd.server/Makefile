@@ -31,6 +31,7 @@ test: debug
 
 clean:
 	rm -rf ./$(BUILD)
+	rm -rf ./Package.resolved
 
 run_debug: debug
 	./.build/debug/Run serve
