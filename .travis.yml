@@ -21,6 +21,9 @@ before_install:
 
 install: 
     - sudo chmod -R 555 /usr/
+    - echo "POSTGRES_DB=cntgrd_db" >> config/.env
+    - echo "POSTGRES_PASSWORD=hunter2" >> config/.env
+    - echo "POSTGRES_USERNAME=cntgrd" >> config/.env
 
 script:
     - make test
