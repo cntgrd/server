@@ -21,7 +21,6 @@ before_install:
 
 install: 
     - sudo chmod -R 555 /usr/
-    - make deploy_dev
 
 script:
     - make test
