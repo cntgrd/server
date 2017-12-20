@@ -4,7 +4,6 @@ language: generic
 sudo: required
 dist: trusty
 env:
-    - BUILD_DIR=Centigrade/com.cntgrd.server
     - DOCKER_COMPOSE_VERSION=1.18.0
 services:
     - docker
