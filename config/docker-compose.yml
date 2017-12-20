@@ -2,10 +2,14 @@ version: '3.3'
 
 services:
     api:
-        command: make run_release
+        command: make run_${BUILD_TYPE}
         depends_on:
             - database
-        image: vapor/toolbox:latest
+        env_file:
+            - .env
+        environment:
+            DOCKER_GUEST: "true"
+        image: ibmcom/swift-ubuntu:4.0.3
         logging:
             driver: "json-file"
             options:
@@ -13,14 +17,12 @@ services:
                 max-file: "10"
         restart: always
         volumes:
-            - ../../Centigrade/com.cntgrd.server:/var/www/cntgrd
+            - ../..:/var/www/cntgrd
             - ../../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     database:
-        environment:
-            POSTGRES_DB_FILE: /run/secrets/db_name
-            POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
-            POSTGRES_USER_FILE: /run/secrets/db_user
+        env_file:
+            - .env
         image: postgres:10 
         logging:
             driver: "json-file"
@@ -28,12 +30,25 @@ services:
                 max-size: "200k"
                 max-file: "10"
         restart: always
-        secrets:
-            - db_name
-            - db_pass
-            - db_user
         volumes:
             - db-data:/var/lib/postgresql/data
+    test:
+        command: make test
+        depends_on:
+            - api 
+        environment:
+            DOCKER_GUEST: "true"
+        image: ibmcom/swift-ubuntu:4.0.3
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+        restart: "no"
+        volumes:
+            - ../..:/var/www/cntgrd
+            - ../../log/cntgrd:/var/log/cntgrd
+        working_dir: /var/www/cntgrd
     web:
         depends_on:
             - database
@@ -55,14 +70,6 @@ services:
             - ./caddy/Caddyfile:/etc/Caddyfile
             - ../../log/caddy:/var/log/caddy
             - ../../site:/var/www/cntgrd
-
-secrets:
-    db_name:
-        external: true
-    db_pass:
-        external: true
-    db_user:
-        external: true
 
 volumes:
     caddy-data:

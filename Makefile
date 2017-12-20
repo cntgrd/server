@@ -6,6 +6,7 @@
 #
 
 DOCKER_ROOT = config/
+DOCKER_COMPOSE_FILE = $(DOCKER_ROOT)docker-compose.yml
 ROOT = $(shell pwd)/
 SRC = Centigrade/com.cntgrd.server/
 BUILD = $(SRC).build/
@@ -14,16 +15,16 @@ BUILD = $(SRC).build/
 # Deployment                    #
 #################################
 
-deploy_clean:
-	docker stack rm centigrade
-
 deploy_dev:
-	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)dev/docker-compose.yml centigrade
+	export BUILD_TYPE=debug
+	docker-compose --file $(DOCKER_COMPOSE_FILE) up
 
 deploy_production:
-	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)prod/docker-compose.yml centigrade
+	export BUILD_TYPE=release
+	docker-compose --file $(DOCKER_COMPOSE_FILE) up -d
+
+stop:
+	docker-compose --file $(DOCKER_COMPOSE_FILE) stop
 
 #################################
 # Docker guest commands         #
@@ -46,7 +47,7 @@ run_release: __release
 	./$(BUILD)release/com.cntgrd.server
 
 test: __debug
-	swift test --package-path $(SRC)
+	swift test --package-path $(SRC) 2>&1 | tee /var/log/cntgrd/test.log
 
 endif
 

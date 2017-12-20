@@ -43,3 +43,6 @@ log/
 # temp files
 *.swp
 .DS_Store
+
+# sensitive files
+*.env
