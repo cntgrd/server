@@ -27,7 +27,7 @@ class RouteTests: XCTestCase {
             let app = try App()
             RouteTests.port = 8080
             try app.postInit()
-            Kitura.addHTTPServer(port: RouteTests.port, with: app.router)
+            Kitura.addHTTPServer(onPort: RouteTests.port, with: app.router)
             Kitura.start()
         } catch {
             XCTFail("Couldn't start Application test server: \(error)")
@@ -44,7 +44,7 @@ class RouteTests: XCTestCase {
 
         URLRequest(forTestWithMethod: "GET")?
             .sendForTestingWithKitura { data, statusCode in
-                if let getResult = String() {
+                if let getResult = String(data: data, encoding: String.Encoding.utf8) {
                     XCTAssertEqual(statusCode, 200)
                     XCTAssertTrue(getResult.contains("<html>"))
                     XCTAssertTrue(getResult.contains("</html>"))
@@ -78,7 +78,7 @@ private extension URLRequest {
 
     func sendForTestingWithKitura(fn: @escaping (Data, Int) -> Void) {
         
-        guard let method = httpMethod, var path = url?.path, let headers = allHTTPHeadersField else {
+        guard let method = httpMethod, var path = url?.path, let headers = allHTTPHeaderFields else {
             XCTFail("Invalid request params")
             return
         }
