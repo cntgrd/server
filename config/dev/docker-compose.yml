@@ -5,7 +5,9 @@ services:
         command: make run_debug
         depends_on:
             - database
-        image: vapor/toolbox:latest
+        environment:
+            DOCKER_GUEST: "true"
+        image: ibmcom/swift-ubuntu:4.0.3
         logging:
             driver: "json-file"
             options:
@@ -13,7 +15,7 @@ services:
                 max-file: "10"
         restart: always
         volumes:
-            - ../../Centigrade/com.cntgrd.server:/var/www/cntgrd
+            - ../..:/var/www/cntgrd
             - ../../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     database:
