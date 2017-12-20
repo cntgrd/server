@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
     api:
-        command: make run_${BUILD_TYPE}
+        command: make __run_${BUILD_TYPE}
         depends_on:
             - database
         env_file:
@@ -17,8 +17,8 @@ services:
                 max-file: "10"
         restart: always
         volumes:
-            - ../..:/var/www/cntgrd
-            - ../../log/cntgrd:/var/log/cntgrd
+            - ../:/var/www/cntgrd
+            - ../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     database:
         env_file:
@@ -33,7 +33,7 @@ services:
         volumes:
             - db-data:/var/lib/postgresql/data
     test:
-        command: make test
+        command: make __test
         depends_on:
             - api 
         environment:
@@ -46,8 +46,8 @@ services:
                 max-file: "10"
         restart: "no"
         volumes:
-            - ../..:/var/www/cntgrd
-            - ../../log/cntgrd:/var/log/cntgrd
+            - ../:/var/www/cntgrd
+            - ../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     web:
         depends_on:
@@ -68,8 +68,8 @@ services:
         volumes:
             - caddy-data:/etc/caddycerts
             - ./caddy/Caddyfile:/etc/Caddyfile
-            - ../../log/caddy:/var/log/caddy
-            - ../../site:/var/www/cntgrd
+            - ../log/caddy:/var/log/caddy
+            - ../site:/var/www/cntgrd
 
 volumes:
     caddy-data:

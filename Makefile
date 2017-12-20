@@ -16,15 +16,16 @@ BUILD = $(SRC).build/
 #################################
 
 deploy_dev:
-	export BUILD_TYPE=debug
-	docker-compose --file $(DOCKER_COMPOSE_FILE) up
+	BUILD_TYPE=debug docker-compose --file $(DOCKER_COMPOSE_FILE) up
 
 deploy_production:
-	export BUILD_TYPE=release
-	docker-compose --file $(DOCKER_COMPOSE_FILE) up -d
+	BUILD_TYPE=release docker-compose --file $(DOCKER_COMPOSE_FILE) up -d
 
 stop:
 	docker-compose --file $(DOCKER_COMPOSE_FILE) stop
+
+test:
+	BUILD_TYPE=debug docker-compose --file $(DOCKER_COMPOSE_FILE) run test
 
 #################################
 # Docker guest commands         #
@@ -40,13 +41,13 @@ __release:
 __update:
 	swift --version
 
-run_debug: __debug
+__run_debug: __debug
 	./$(BUILD)debug/com.cntgrd.server
 
-run_release: __release
+__run_release: __release
 	./$(BUILD)release/com.cntgrd.server
 
-test: __debug
+__test: __debug
 	swift test --package-path $(SRC) 2>&1 | tee /var/log/cntgrd/test.log
 
 endif
