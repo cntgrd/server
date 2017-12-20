@@ -6,7 +6,9 @@
 #
 
 DOCKER_ROOT = config/
+ROOT = $(shell pwd)/
 SRC = Centigrade/com.cntgrd.server/
+BUILD = $(SRC).build/
 
 #################################
 # Deployment                    #
@@ -14,50 +16,46 @@ SRC = Centigrade/com.cntgrd.server/
 
 deploy_clean:
 	docker stack rm centigrade
-	docker stack rm dev_centigrade
-	docker stack rm testing_centigrade
 
 deploy_dev:
 	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)dev/docker-compose.yml dev_centigrade
+		./$(DOCKER_ROOT)dev/docker-compose.yml centigrade
 
 deploy_production:
 	docker stack deploy --compose-file \
 		./$(DOCKER_ROOT)prod/docker-compose.yml centigrade
 
-deploy_testing:
-	docker stack deploy --compose-file \
-		./$(DOCKER_ROOT)testing/docker-compose.yml testing_centigrade
-
 #################################
-# Targets                       #
+# Docker guest commands         #
 #################################
 
-debug:
-	$(MAKE) -C $(SRC) debug
+ifeq ($(DOCKER_GUEST), true)
+__debug:
+	swift build --package-path $(SRC) --configuration debug 2>&1 | tee /var/log/cntgrd/build-debug.log
 
-release:
-	$(MAKE) -C $(SRC) release
+__release:
+	swift build --package-path $(SRC) --configuration release 2>&1 | tee /var/log/cntgrd/build-release.log
 
-#################################
-# Testing                       #
-#################################
+__update:
+	swift --version
 
-test:
-	$(MAKE) -C $(SRC) test
+run_debug: __debug
+	./$(BUILD)debug/com.cntgrd.server
+
+run_release: __release
+	./$(BUILD)release/com.cntgrd.server
+
+test: __debug
+	swift test --package-path $(SRC)
+
+endif
 
 #################################
 # Miscellaneous                 #
 #################################
 
 clean:
-	$(MAKE) -C $(SRC) clean
+	rm -rf ./$(BUILD)
 
-run_debug:
-	$(MAKE) -C $(SRC) run_debug
-
-run_release:
-	$(MAKE) -C $(SRC) run_release
-
-.PHONY: clean debug deploy_clean deploy_dev deploy_production \
-		deploy_testing release run_debug run_release test
+.PHONY: clean __debug deploy_clean deploy_dev deploy_production __release \
+		run_debug run_release test __update
