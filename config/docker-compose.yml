@@ -50,6 +50,7 @@ services:
             - ../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     web:
+        command: /usr/bin/caddy --conf Caddyfile-${BUILD_TYPE}
         depends_on:
             - database
             - api 
@@ -67,7 +68,9 @@ services:
         restart: always
         volumes:
             - caddy-data:/etc/caddycerts
-            - ./caddy/Caddyfile:/etc/Caddyfile
+            - ./caddy/Caddyfile-debug:/etc/Caddyfile-debug
+            - ./caddy/Caddyfile-release:/etc/Caddyfile-release
+            - ./caddy/common.conf:/etc/common.conf
             - ../log/caddy:/var/log/caddy
             - ../site:/var/www/cntgrd
 
