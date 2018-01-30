@@ -50,7 +50,7 @@ services:
             - ../log/cntgrd:/var/log/cntgrd
         working_dir: /var/www/cntgrd
     web:
-        command: /usr/bin/caddy --conf Caddyfile-${BUILD_TYPE}
+        command: --conf /etc/Caddyfile-${BUILD_TYPE}
         depends_on:
             - database
             - api 
