@@ -1,0 +1,76 @@
+version: '3.3'
+
+services:
+    api:
+        command: make __run_${BUILD_TYPE}
+        depends_on:
+            - database
+        env_file:
+            - .env
+        environment:
+            DOCKER_GUEST: "true"
+        image: ibmcom/swift-ubuntu:4.0.3
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+        restart: always
+        volumes:
+            - ../:/var/www/cntgrd
+            - ../log/cntgrd:/var/log/cntgrd
+        working_dir: /var/www/cntgrd
+    database:
+        env_file:
+            - .env
+        image: postgres:10 
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+        restart: always
+        volumes:
+            - db-data:/var/lib/postgresql/data
+    test:
+        command: make __test
+        depends_on:
+            - api 
+        environment:
+            DOCKER_GUEST: "true"
+        image: ibmcom/swift-ubuntu:4.0.3
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+        restart: "no"
+        volumes:
+            - ../:/var/www/cntgrd
+            - ../log/cntgrd:/var/log/cntgrd
+        working_dir: /var/www/cntgrd
+    web:
+        depends_on:
+            - database
+            - api 
+        environment:
+            CADDYPATH: /etc/caddycerts
+        image: abiosoft/caddy:latest
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+        ports:
+            - 80:80
+            - 443:443
+        restart: always
+        volumes:
+            - caddy-data:/etc/caddycerts
+            - ./caddy/Caddyfile:/etc/Caddyfile
+            - ../log/caddy:/var/log/caddy
+            - ../site:/var/www/cntgrd
+
+volumes:
+    caddy-data:
+    db-data:
