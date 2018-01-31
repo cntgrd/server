@@ -30,11 +30,11 @@ script:
 
 deploy:
     - provider: script
-      script: scripts/deploy.sh debug
+      script: scripts/deploy.sh --debug
       on:
           branch: dev
     - provider: script
-      script: scripts/deploy.sh release
+      script: scripts/deploy.sh --release
       on:
           branch: master
 
