@@ -16,7 +16,7 @@ BUILD = $(SRC).build/
 #################################
 
 deploy_dev:
-	BUILD_TYPE=debug docker-compose --file $(DOCKER_COMPOSE_FILE) up
+	BUILD_TYPE=debug docker-compose --file $(DOCKER_COMPOSE_FILE) up -d
 
 deploy_production:
 	BUILD_TYPE=release docker-compose --file $(DOCKER_COMPOSE_FILE) up -d
