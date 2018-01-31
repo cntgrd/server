@@ -16,7 +16,7 @@ The installation of the Docker components is a bit beyond the scope of this docu
 
 
 
-## Development
+## Dev Server
 
 1. Clone the repository
 
@@ -25,13 +25,21 @@ git clone https://github.com/cntgrd/server.git
 cd server
 ``` 
 
-2. Run the following command to spin up the Docker environment:
+2. Create the `.env` file, and place it in `server/config/`
+
+```
+POSTGRES_DB=<Database name>
+POSTGRES_PASSWORD=<password>
+POSTGRES_USER=<Username>
+```
+
+3. Run the following command to spin up the Docker environment:
 
 ```bash
 make deploy_dev
 ```
 
-## Production
+## Production Server
 
 1. Clone the repository
 
@@ -40,7 +48,15 @@ git clone https://github.com/cntgrd/server.git
 cd server
 ``` 
 
-2. Run the following command to spin up the Docker environment:
+2. Create the `.env` file, and place it in `server/config/`
+
+```
+POSTGRES_DB=<Database name>
+POSTGRES_PASSWORD=<password>
+POSTGRES_USER=<Username>
+```
+
+3. Run the following command to spin up the Docker environment:
 
 ```bash
 make deploy_production
