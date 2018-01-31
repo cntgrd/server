@@ -17,7 +17,6 @@ addons:
 
 before_install:
     - openssl aes-256-cbc -K $encrypted_5a1f85cf9a5c_key -iv $encrypted_5a1f85cf9a5c_iv -in config/deploy_rsa.enc -out config/deploy_rsa -d
-    - ls config/
     - sudo rm /usr/local/bin/docker-compose
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
@@ -34,10 +33,12 @@ script:
 
 deploy:
     - provider: script
+      skip_cleanup: true
       script: scripts/deploy.sh --debug
       on:
           branch: dev
     - provider: script
+      skip_cleanup: true
       script: scripts/deploy.sh --release
       on:
           branch: master
