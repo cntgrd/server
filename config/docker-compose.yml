@@ -35,7 +35,7 @@ services:
     test:
         command: make __test
         depends_on:
-            - api 
+            - database 
         environment:
             DOCKER_GUEST: "true"
         image: ibmcom/swift-ubuntu:4.0.3
