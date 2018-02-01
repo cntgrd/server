@@ -13,7 +13,7 @@ debug() {
 release() {
     git config --global push.default matching
     git remote add deploy ssh://git@$PROD_REMOTE_HOST:$PROD_REMOTE_PORT$PROD_REMOTE_DIR
-    git push deploy dev
+    git push deploy master
 }
 
 case $1 in
