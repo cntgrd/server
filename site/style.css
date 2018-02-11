@@ -54,6 +54,11 @@ p {
 	margin: 1rem 0;
 }
 
+.auth0-badge {
+	text-align: center;
+	margin-top: 2rem;
+}
+
 @media screen and (min-width: 880px) {
 	body {
 		flex-direction: row;
@@ -94,5 +99,11 @@ p {
 
 	.team-list li:first-child:before {
 		content: '';
+	}
+	
+	.auth0-badge {
+		position: absolute;
+		bottom: 0;
+		right: 1rem;
 	}
 }
