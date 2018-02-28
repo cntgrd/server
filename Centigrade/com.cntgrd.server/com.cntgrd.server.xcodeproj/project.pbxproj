@@ -31,6 +31,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A1FA308C2036417900C2CFA3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FA308B2036417900C2CFA3 /* Models.swift */; };
 		OBJ_190 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_196 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Package.swift */; };
 		OBJ_202 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* Package.swift */; };
@@ -596,6 +597,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A1FA308B2036417900C2CFA3 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		"Configuration::Configuration::Product" /* Configuration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Configuration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FileKit::FileKit::Product" /* FileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Health::Health::Product" /* Health.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Health.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -900,6 +902,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1FA308D2036417F00C2CFA3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1FA308B2036417900C2CFA3 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = SOURCE_ROOT;
+		};
 		OBJ_100 /* Kitura-TemplateEngine 1.7.2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1332,6 +1342,7 @@
 			children = (
 				OBJ_9 /* Application.swift */,
 				OBJ_10 /* InitializationError.swift */,
+				A1FA308D2036417F00C2CFA3 /* Models */,
 				OBJ_11 /* Routes */,
 			);
 			name = Application;
@@ -2000,6 +2011,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_262 /* main.swift in Sources */,
+				A1FA308C2036417900C2CFA3 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
