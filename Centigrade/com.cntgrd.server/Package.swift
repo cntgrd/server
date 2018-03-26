@@ -8,14 +8,19 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMinor(from: "1.7.1")),
         .package(url: "https://github.com/IBM-Swift/Configuration.git", .upToNextMajor(from: "3.0.0")),
         .package(url: "https://github.com/IBM-Swift/Health.git", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery", .upToNextMinor(from: "1.0.0")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL", .upToNextMinor(from: "1.0.0")),
-        .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/IBM-Swift/Swift-Kuery.git", .upToNextMinor(from: "1.0.0")),
+        .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", .upToNextMinor(from: "1.0.0")),
     ],
     targets: [
-        .target(name: "com.cntgrd.server", dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ]),
-        .target(name: "Application", dependencies: [ "Kitura", "Configuration", "Health"], path: "Sources/Application"),
-        .testTarget(name: "ApplicationTests", dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ])
+        .target(
+            name: "com.cntgrd.server",
+            dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ]),
+        .target(
+            name: "Application",
+            dependencies: [ "Kitura", "Configuration", "Health", "SwiftKuery", "SwiftKueryPostgreSQL"],
+            path: "Sources/Application"),
+        .testTarget(
+            name: "ApplicationTests",
+            dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ])
     ]
 )
-

@@ -16,6 +16,11 @@ public class App {
             response.send(json: ["message": "hello world"])
             next()
         }
+        
+        router.post("/data") { request, response, next in
+            next()
+        }
+        
     }
 
     func postInit() throws {
