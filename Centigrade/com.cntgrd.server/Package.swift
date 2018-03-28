@@ -10,6 +10,8 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Health.git", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/IBM-Swift/Swift-Kuery.git", .upToNextMinor(from: "1.0.0")),
         .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", .upToNextMinor(from: "1.0.0")),
+        .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMinor(from: "1.0.0")),
+        .package(url: "https://github.com/cntgrd/data.git", .upToNextMinor(from: "0.0.0")),
     ],
     targets: [
         .target(
@@ -17,7 +19,13 @@ let package = Package(
             dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ]),
         .target(
             name: "Application",
-            dependencies: [ "Kitura", "Configuration", "Health", "SwiftKuery", "SwiftKueryPostgreSQL"],
+            dependencies: [ "Kitura",
+                            "Configuration",
+                            "Health",
+                            "SwiftKuery",
+                            "SwiftKueryPostgreSQL",
+                            "SwiftProtobuf",
+                            "CentigradeData" ],
             path: "Sources/Application"),
         .testTarget(
             name: "ApplicationTests",
