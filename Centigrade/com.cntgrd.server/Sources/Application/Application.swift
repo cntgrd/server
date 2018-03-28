@@ -4,6 +4,8 @@ import LoggerAPI
 import Configuration
 import KituraContracts
 import Health
+import SwiftProtobuf
+import CentigradeData
 
 public let projectPath = ConfigurationManager.BasePath.project.path
 public let health = Health()
