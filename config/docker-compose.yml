@@ -2,7 +2,9 @@ version: '3.3'
 
 services:
     api:
-        build: ./Docker/Dockerfile-swift
+        build:
+            context: ./Docker
+            dockerfile: Dockerfile-swift
         command: make __run_${BUILD_TYPE}
         depends_on:
             - database
@@ -33,7 +35,9 @@ services:
         volumes:
             - db-data:/var/lib/postgresql/data
     test:
-        build: ./Docker/Dockerfile-swift
+        build:
+            context: ./Docker
+            dockerfile: Dockerfile-swift
         command: make __test
         depends_on:
             - database 
