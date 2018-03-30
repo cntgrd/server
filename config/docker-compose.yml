@@ -23,7 +23,7 @@ services:
     database:
         env_file:
             - .env
-        image: postgres:10 
+        image: postgres:latest
         logging:
             driver: "json-file"
             options:
