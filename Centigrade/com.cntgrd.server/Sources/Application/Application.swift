@@ -18,13 +18,17 @@ public class App {
             response.send(json: ["message": "hello world"])
             next()
         }
-        
-        
+
         let tempPressureHumidityUUID = UUID().uuidString
         let atmosphereUUID = UUID().uuidString
         let stationUUID = UUID().uuidString
         
+        let requestHelper = RequestHelper()
+        
         router.get("/data") { request, response, next in
+            let acceptHeader = requestHelper.acceptHeader(headers: request.headers)
+            response.headers.append("Content-Type", value: acceptHeader.contentType)
+            
             
             let temperature = Centigrade_Measurement(time: UInt64(NSDate().timeIntervalSince1970),
                                                      measurement: .temperature(Centigrade_Celsius(value: 22)),
@@ -46,10 +50,14 @@ public class App {
             let measurementList = [temperature, humidity, pressure, totalVOC, equivalentC02]
             let measurements = Centigrade_StationRecentMeasurements(uuid: stationUUID, measurements: measurementList)
             
-            
-            // let data = try measurements.jsonUTF8Data()
-            let data = try measurements.serializedData()
-            response.send(data: data)
+            switch acceptHeader {
+            case .json:
+                let data = try measurements.jsonUTF8Data()
+                response.send(data: data)
+            case .protobuf:
+                let data = try measurements.serializedData()
+                response.send(data: data)
+            }
             
             next()
         }
