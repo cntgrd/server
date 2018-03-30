@@ -59,5 +59,6 @@ endif
 clean:
 	rm -rf ./$(BUILD)
 
-.PHONY: clean __debug deploy_clean deploy_dev deploy_production __release \
-		run_debug run_release test __update
+.PHONY: __debug __release __run_debug __run_release __test __update clean \
+	deploy_dev deploy_production
+

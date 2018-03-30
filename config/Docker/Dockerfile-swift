@@ -1,0 +1,3 @@
+FROM ibmcom/swift-ubuntu:latest
+
+RUN apt-get install -y libpq-dev
