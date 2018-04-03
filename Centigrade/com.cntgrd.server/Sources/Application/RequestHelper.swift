@@ -40,4 +40,14 @@ class RequestHelper {
         }
     }
     
+//    final func contentTypeHeader(headers: Headers) {
+//        let contentType = headers["Content-Type"] ?? "application/json"
+//        let messageType = headers["Message-Type"]
+//        let type:(String, String?) = (contentType, messageType)
+//        switch type {
+//        case ("application/octet-stream","s"):
+//            return
+//        }
+//    }
+    
 }
