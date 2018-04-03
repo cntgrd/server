@@ -1,20 +1,7 @@
-FROM ubuntu:16.04
+FROM swiftdocker/swift:latest
 
 USER root
 
-# install wget
-RUN apt-get update && \
-    apt-get -y install wget && \
-    rm -rf /var/lib/apt/lists/*;
-
-# add Vapor apt repository
-RUN /bin/bash -c "$(wget -qO- https://apt.vapor.sh)"
-
-# install Swift and Vapor
-RUN apt-get update && \
-    apt-get install -y swift vapor && \
-    rm -rf /var/lib/apt/lists/*;
-
 # install libpq headers
-RUN apt-get update && \
-    apt-get install -y libpq-dev
+RUN apt update && \
+    apt install -y libpq-dev
