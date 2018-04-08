@@ -2,16 +2,15 @@ version: '3.3'
 
 services:
     api:
-        build:
-            context: ./Docker
-            dockerfile: Dockerfile-swift
         command: make __run_${BUILD_TYPE}
         depends_on:
             - database
+            - test
         env_file:
             - .env
         environment:
             DOCKER_GUEST: "true"
+        image: norionomura/swift:latest
         logging:
             driver: "json-file"
             options:
@@ -31,18 +30,19 @@ services:
             options:
                 max-size: "200k"
                 max-file: "10"
+        ports:
+            - "5432"
         restart: always
         volumes:
             - db-data:/var/lib/postgresql/data
+            - ../log/postgresql:/var/log/postgresq
     test:
-        build:
-            context: ./Docker
-            dockerfile: Dockerfile-swift
         command: make __test
         depends_on:
             - database 
         environment:
             DOCKER_GUEST: "true"
+        image: norionomura/swift:latest
         logging:
             driver: "json-file"
             options:

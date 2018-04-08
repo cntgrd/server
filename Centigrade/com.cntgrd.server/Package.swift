@@ -4,31 +4,24 @@ import PackageDescription
 let package = Package(
     name: "com.cntgrd.server",
     dependencies: [
-        .package(url: "https://github.com/IBM-Swift/Kitura.git", .upToNextMajor(from: "2.0.0")),
-        .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMinor(from: "1.7.1")),
-        .package(url: "https://github.com/IBM-Swift/Configuration.git", .upToNextMajor(from: "3.0.0")),
-        .package(url: "https://github.com/IBM-Swift/Health.git", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery.git", .upToNextMinor(from: "1.0.0")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", .upToNextMinor(from: "1.0.0")),
+        .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "3.0.0-rc.2")),
+        .package(url: "https://github.com/vapor/fluent.git", from: "3.0.0-rc.2"),
+        .package(url: "https://github.com/vapor/fluent-postgresql.git", .upToNextMinor(from: "1.0.0-rc.2")),
         .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMinor(from: "1.0.0")),
-        .package(url: "https://github.com/cntgrd/data.git", .upToNextMinor(from: "0.0.0")),
+        .package(url: "https://github.com/cntgrd/data.git", .upToNextMinor(from: "0.1.0")),
+        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0-rc.3"),
+        .package(url: "https://github.com/vapor/crypto.git", .upToNextMinor(from: "3.0.0")),
     ],
     targets: [
-        .target(
-            name: "com.cntgrd.server",
-            dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ]),
-        .target(
-            name: "Application",
-            dependencies: [ "Kitura",
-                            "Configuration",
-                            "Health",
-                            "SwiftKuery",
-                            "SwiftKueryPostgreSQL",
-                            "SwiftProtobuf",
-                            "CentigradeData" ],
-            path: "Sources/Application"),
-        .testTarget(
-            name: "ApplicationTests",
-            dependencies: [ .target(name: "Application"), "Kitura", "HeliumLogger" ])
+        .target(name: "App", dependencies: [ "Vapor",
+                                             "Fluent",
+                                             "FluentPostgreSQL",
+                                             "SwiftProtobuf",
+                                             "CentigradeData",
+                                             "Authentication",
+                                             "Crypto"]),
+        .target(name: "Run", dependencies: ["App"]),
+        .testTarget(name: "AppTests", dependencies: ["App"])
     ]
 )
+
