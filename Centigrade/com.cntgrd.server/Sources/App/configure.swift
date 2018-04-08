@@ -54,4 +54,14 @@ public func configure(
     migrations.add(model: MeasurementModel.self, database: .psql)
     services.register(migrations)
 
+    /// Add server configuration
+    let serverConfig = try EngineServerConfig(
+        hostname: "0.0.0.0",
+        port: 8080,
+        backlog: 256,
+        workerCount: 1,
+        maxBodySize: 1_000_000,
+        reuseAddress: true,
+        tcpNoDelay: true)
+    
 }
