@@ -42,10 +42,10 @@ __update:
 	swift --version
 
 __run_debug: __debug
-	./$(BUILD)debug/com.cntgrd.server
+	./$(BUILD)debug/Run
 
 __run_release: __release
-	./$(BUILD)release/com.cntgrd.server
+	./$(BUILD)release/Run
 
 __test: __debug
 	swift test --package-path $(SRC) 2>&1 | tee /var/log/cntgrd/test.log
