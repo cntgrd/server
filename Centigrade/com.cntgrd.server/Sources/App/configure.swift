@@ -63,5 +63,6 @@ public func configure(
         maxBodySize: 1_000_000,
         reuseAddress: true,
         tcpNoDelay: true)
+    services.register(serverConfig)
     
 }
