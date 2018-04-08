@@ -16,6 +16,8 @@ services:
             options:
                 max-size: "200k"
                 max-file: "10"
+        ports:
+            - "8080:8080"
         restart: always
         volumes:
             - ../:/var/www/cntgrd
